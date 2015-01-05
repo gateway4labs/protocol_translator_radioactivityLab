@@ -1,0 +1,19 @@
+
+[Authentication parameters]
+wsdlURL = http://localhost/iLabServiceBroker/iLabServiceBroker.asmx?wsdl
+
+
+SbGuid = yourServiceBrokerGuid
+groupName = iLabGroupName
+userName = username
+authorityKey = translatorAuthorityKey
+duration = -1
+start =  2014-02-01T18:13:00
+
+[Database]
+
+engine = mysql
+host = localhost
+database = translator
+user =
+password =

@@ -1,0 +1,163 @@
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>WS requests/responses for the radioactivity lab</title>
+    <link rel="stylesheet" media="all" href="json.human/css/demo.css" />
+    <link rel="stylesheet" media="all" href="json.human/css/json.human.css" />
+    <link rel="stylesheet" media="all" href="http:////cdnjs.cloudflare.com/ajax/libs/codemirror/3.16.0/codemirror.css" />
+</head>
+
+<body>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/codemirror/3.16.0/codemirror.min.js"></script>
+<script src="json.human/lib/crel.js"></script>
+<script src="json.human/src/json.human.js"></script>
+
+
+<script>
+    var conn = new WebSocket('ws://localhost:8080/radioactivity');
+    var textarea = document.getElementById("input");
+
+
+    conn.onopen = function(e) {
+        console.log("Websocket connection established!");
+        document.getElementById("status").innerHTML = '<br>URL: <i>'+conn.url+'</i><br><b>Websocket connection established!</b>';
+    };
+
+    conn.onmessage = function(e) {
+        console.log(e.data);
+        document.getElementById("response").innerHTML = '<br> <b>Raw Response: </b>'+ e.data;
+        //document.getElementById('slider').value = e.data;
+        doConvert(e.data);
+    };
+
+    function send_input1()
+    {
+        document.getElementById("request").innerHTML = '<br> <b>Request: </b>'+ document.getElementById('input1').value;
+
+        conn.send(document.getElementById('input1').value);
+        document.getElementById('response').value = "";
+    }
+    function send_input2()
+    {
+        document.getElementById("request").innerHTML = '<br> <b>Request: </b>'+ document.getElementById('input2').value;
+
+        conn.send(document.getElementById('input2').value);
+        document.getElementById('response').value = "";
+    }
+
+    function getSensorMetadata()
+    {
+        document.getElementById("request").innerHTML = '<br> <b>Request: </b>'+ "{ \"method\": \"getSensorMetadata\"}";
+        conn.send("{ \"method\": \"getSensorMetadata\"}");
+        document.getElementById('response').value = "";
+    }
+    function getActuatorMetadata()
+    {
+        document.getElementById("request").innerHTML = '<br> <b>Request: </b>'+ "{ \"method\": \"getActuatorMetadata\"}";
+        conn.send("{ \"method\": \"getActuatorMetadata\"}");
+        document.getElementById('response').value = "";
+    }
+
+    function sendToAll()
+    {
+        document.getElementById("sliderValue").innerHTML = document.getElementById('slider').value;
+        conn.send(document.getElementById('slider').value);
+        //document.getElementById('message').value = "";
+        //document.getElementById('slider').value = "";
+    }
+
+    function reserve()
+    {
+        xmlhttp = new XMLHttpRequest();
+        xmlhttp.open("GET","http://translator/auth_user.php?user="+document.getElementById("username").value, false);
+        xmlhttp.send();
+        xmlDoc = xmlhttp.responseXML;
+        success = xmlDoc.getElementsByTagName("created")[0].childNodes[0].nodeValue;
+        reservation = xmlDoc.getElementsByTagName("reservationKey")[0].childNodes[0].nodeValue;
+        document.getElementById("reservation").innerHTML ="<br>Created: "+success+"<br>authToken: "+reservation;
+
+    }
+
+    function convert(input) {
+        var node = JsonHuman.format(input);
+
+        document.getElementById("output").innerHTML = "<b>Pretty Response: </b>:";
+        document.getElementById("output").appendChild(node);
+        raw.textContent = output.innerHTML;
+    }
+
+    function doConvert(jsonString)
+    {
+        var json;
+        try {
+            json = JSON.parse(jsonString);
+        } catch (error) {
+            alert("Error parsing json:\n" + error.stack);
+            return;
+        }
+
+        convert(json);
+    }
+
+</script>
+<h1>WS requests/responses for the radioactivity lab</h1>
+
+
+<div id="status"></div>
+<h3>Reservation required before sending Actuator requests:</h3>
+<input type="button" onclick="reserve()" id="" value="Reserve Lab">
+User:
+<input type="text" onclick="" id="username" value="go-lab">
+<div id="reservation"></div>
+
+<form onsubmit="sendToChat();return false">
+    <br>
+    Raw Json Request:
+    <br>
+    <textarea id="input1" rows="10" cols="60">
+        {
+        "authToken": "194580923486",
+        "method": "sendActuatorData",
+        "accessRole": "controller",
+        "lastMeasured": "2011-07-14 19:43:37 +0100",
+        "actuatorId": "geiger_counter_actuator",
+        "valueNames": ["setupName", "setupId", "sourceName", "repeat", "duration", "distance", "absorberName" ],
+        "data": ["Radioactivity versus Absorber (Simulated - No delays)",
+        "SimActivityVsAbsorberNoDelay",
+        "Strontium-90",
+        3,
+        2,
+        [20],
+        ["None","Paper","Aluminium Sheet","Lead Sheet","Aluminium Disc","Lead Disc"]
+        ]
+        }
+    </textarea>
+    <textarea id="input2" rows="10" cols="60">
+        {
+        "authToken": "194580923486",
+        "method": "getSensorData",
+        "accessRole": "controller",
+        "lastMeasured": "2011-07-14 19:43:37 +0100",
+        "sensorId": "geiger_counter_sensor",
+        "updateFrequency": 0.2,
+        "configuration": [
+              {
+               "parameter": "experiment_id",
+               "value": 1737
+              }
+        ]
+        }
+    </textarea>
+    <br>
+
+    <input type="button" onclick="send_input1()" id="" value="Send Request 1">
+    <input type="button" onclick="send_input2()" id="" value="Send Request 2">
+    <input type="button" onclick="getSensorMetadata()" id="" value="getSensorMetadata">
+    <input type="button" onclick="getActuatorMetadata()" id="" value="getActuatorMetadata">
+
+</form>
+<div id="request"></div>
+<div id="output"></div>
+<div id="response"></div>
+
+</body>
