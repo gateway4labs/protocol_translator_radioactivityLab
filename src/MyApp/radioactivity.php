@@ -26,11 +26,7 @@ class radioactivity implements MessageComponentInterface {
     public function onMessage(ConnectionInterface $from, $msg) {
 
         //Reply with metadata
-        //$theMessageHandler = new MessageHandler();
         $this->theMessageHandler->parseMethod($msg, $from);
-
-        //$from->send(json_encode($method));
-        //$from->send(getSensorMetadata());
 
     }
 
