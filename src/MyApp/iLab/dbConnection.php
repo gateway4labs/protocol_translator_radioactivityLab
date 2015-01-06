@@ -66,13 +66,4 @@ class dbConnection{
  
 }
 
-//$db = new dbConnection('localhost', 'translator','root', '-ccol2009-');
-
-//$db->createKey('test', 'test2', 'testkey','test3', 'test4');
-//$cred = $db->selectCredentials('12345');
-//echo $cred;
-//echo $cred['couponId'];
-//echo "<br>";
-//echo $cred['passkey'];
-
 ?>
