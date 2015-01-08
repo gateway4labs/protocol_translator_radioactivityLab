@@ -1,6 +1,7 @@
 <?php
 
 $root_password = $argv[1];
+$root = "root";
 //Download composer
 $source = "https://getcomposer.org/download/1.0.0-alpha9/composer.phar";
 $dest = "composer.phar";
