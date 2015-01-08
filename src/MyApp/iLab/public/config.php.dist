@@ -1,12 +1,11 @@
-
 [Authentication parameters]
 wsdlURL = http://localhost/iLabServiceBroker/iLabServiceBroker.asmx?wsdl
 
 
-SbGuid = yourServiceBrokerGuid
-groupName = iLabGroupName
-userName = username
-authorityKey = translatorAuthorityKey
+SbGuid =
+groupName =
+userName = go-lab
+authorityKey =
 duration = -1
 start =  2014-02-01T18:13:00
 
@@ -16,10 +15,11 @@ engine = mysql
 host = localhost
 database = translator
 user = translator
-password =
+password = hblgzzg7t6t
+
 
 [Radioacivity Lab Server II - has Absorbers]
 
-couponId = 5319
-passkey = 73BAA965FFDE47DABE25BEF61211B6E3
-clientGuid = D3EB17D710EB4A84A8891F4D106C54AF
+couponId =
+passkey =
+clientGuid =
