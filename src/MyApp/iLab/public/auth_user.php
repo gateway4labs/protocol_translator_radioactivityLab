@@ -2,23 +2,28 @@
 
 use iLab\dbConnection;
 use iLab\authClient;
-include 'dbConnection.php';
+include '../dbConnection.php';
 include 'authClient.php';
 
     ini_set('display_errors',1);
     error_reporting(-1); 
     
-//Read config file
-$ini_array = parse_ini_file("config.ini");
 
-$db = new dbConnection();
+$ini_array = parse_ini_file("config.php");
+//ini_set('display_errors',1);
+//error_reporting(-1);
+$credentials['host'] = $ini_array['host'];
+$credentials['database'] = $ini_array['database'];
+$credentials['user'] = $ini_array['user'];
+$credentials['password'] = $ini_array['password'];
+
+$db = new dbConnection($credentials);
 
 //$test = $db->selectAll();
 //var_dump($test);
 
 //Retrieve GET Paremeters
 $user = $_GET["user"];
-
 
 $authCouponId = $ini_array["couponId"];
 $authPasskey = $ini_array["passkey"];
@@ -29,8 +34,14 @@ $theClientAuth = new authClient($user, $clientId, $authCouponId, $authPasskey);
 
 //Retrieve credential from Service Broker for sbAuthHeader
 //echo $theClientAuth->getURL();
+$launchUrl = $theClientAuth->getURL();
 
-$credentials = file_get_contents($theClientAuth->getURL());
+$credentials = file_get_contents($launchUrl);
+
+if ($credentials == NULL){
+    die("Reservation failed");
+}
+
 $credentialsXml = simplexml_load_string($credentials);
 
 $result = $db->createReservation($user, $credentialsXml->couponID, $credentialsXml->couponPassKey, $credentialsXml->labserverId, $duration);

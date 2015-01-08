@@ -15,5 +15,11 @@ start =  2014-02-01T18:13:00
 engine = mysql
 host = localhost
 database = translator
-user =
+user = translator
 password =
+
+[Radioacivity Lab Server II - has Absorbers]
+
+couponId = 5319
+passkey = 73BAA965FFDE47DABE25BEF61211B6E3
+clientGuid = D3EB17D710EB4A84A8891F4D106C54AF

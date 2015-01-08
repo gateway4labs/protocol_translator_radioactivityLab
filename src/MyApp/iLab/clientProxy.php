@@ -10,7 +10,7 @@ class ClientProxy {
             
    function __construct($labServerID, $couponID, $couponPasskey)
     {
-    $ini_array = parse_ini_file("config.ini");
+    $ini_array = parse_ini_file("public/config.php");
     ini_set('display_errors',1);
     error_reporting(-1); 
     //Parse config.ini parameters

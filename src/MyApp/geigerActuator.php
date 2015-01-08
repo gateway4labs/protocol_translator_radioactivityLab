@@ -19,11 +19,11 @@ class geigerActuator implements actuator{
    public $db;
    public $translator;
 
-    function __construct(){
+    function __construct($credentials){
 
-        $this->db = new dbConnection();
+
+        $this->db = new dbConnection($credentials);
         //$credentials = $this->db->selectCredentials($reservationId);
-
     }
 
    public function sendActuatorData($from, $message){

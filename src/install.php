@@ -1,6 +1,6 @@
 <?php
 
-$ini_array = parse_ini_file("MyApp/iLab/config.ini");
+$ini_array = parse_ini_file("MyApp/iLab/public/config.php");
 ini_set('display_errors',1);
 error_reporting(-1);
 
@@ -34,7 +34,9 @@ $query = "CREATE DATABASE IF NOT EXISTS `$db` DEFAULT CHARACTER SET latin1 COLLA
 
 try{
     $result = $dbConn->exec($query);
-    //or die(print_r($dbConn->errorInfo(), true));
+    if ($result == true){
+        echo "Database created";
+    }
 
 }
 catch (PDOException $e) {

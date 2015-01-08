@@ -1,8 +1,8 @@
+<?php
+
 //The Service Broker should redirect the user to this file (Batch redirect).
 //The Service Broker appends the credentials (coupon_id, passkey and labServer_id) to the URL when forwarding the user to this script.
 //The forwarded credentials will be retrieved and returned.
-
-<?php
 
 $coupon_id = $_GET["coupon_id"];
 $passkey = $_GET["passkey"];

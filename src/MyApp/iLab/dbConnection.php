@@ -8,15 +8,15 @@ class dbConnection{
     
     var $dbConn;
     
-    public function __construct() {
+    public function __construct($credentials) {
 
-        $ini_array = parse_ini_file("config.ini");
-        ini_set('display_errors',1);
-        error_reporting(-1);
-        $host = $ini_array['host'];
-        $dbname = $ini_array['database'];
-        $dbuser = $ini_array['user'];
-        $dbpassword = $ini_array['password'];
+        //$ini_array = parse_ini_file("public/config.php");
+        //ini_set('display_errors',1);
+        //error_reporting(-1);
+        $host = $credentials['host'];
+        $dbname = $credentials['database'];
+        $dbuser = $credentials['user'];
+        $dbpassword = $credentials['password'];
 
 
     ini_set('display_errors',1);

@@ -15,9 +15,9 @@ class geigerSensor implements sensor{
     public $db;
     public $translator;
 
-    function __construct(){
+    function __construct($credentials){
 
-        $this->db = new dbConnection();
+        $this->db = new dbConnection($credentials);
         //$credentials = $this->db->selectCredentials($reservationId);
 
     }

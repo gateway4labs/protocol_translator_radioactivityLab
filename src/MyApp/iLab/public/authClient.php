@@ -13,7 +13,7 @@ class authClient {
     
    function __construct($userName, $clientId, $authCouponId, $authPasskey)
     {
-    $ini_array = parse_ini_file("config.ini");
+    $ini_array = parse_ini_file("config.php");
     ini_set('display_errors',1);
     error_reporting(-1); 
     //Parse config.ini parameters

@@ -20,9 +20,10 @@ class MessageHandler {
 
    function __construct(){
 
-       $this->theGeigerCounterActuator = new geigerActuator();
-       $this->theGeigerSensor = new geigerSensor();
-       $this->db = new dbConnection();
+       $credentials = parse_ini_file("iLab/public/config.php");
+       $this->theGeigerCounterActuator = new geigerActuator($credentials);
+       $this->theGeigerSensor = new geigerSensor($credentials);
+       $this->db = new dbConnection($credentials);
 }
    public function parseMethod($message, $from){
 
