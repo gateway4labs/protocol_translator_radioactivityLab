@@ -10,20 +10,16 @@ Installation:
 This protocol translator was developed with Ratchet (http://socketo.me/), a WebSockets library for PHP.
 Composer (https://getcomposer.org/) is used to manage the dependencies.
 
-2. cd to protocol_translator_radioactivityLab and install Composer by downloading the latest composer.phar
+4. Rename ~/src/MyApp/iLab/public/config.php.dist to ~/src/MyApp/iLab/public/config.php
 
-3. Run:
+    $ cp src/MyApp/iLab/public/config.php.dist src/MyApp/iLab/public/config.php
 
-  $ php composer.phar install
+5. Configure the database and iLab credentials in config.php
 
-It will download all the dependencies
+5. cd to Run:
 
-4. Check the ~/src/MyApp/iLab/config.ini and choose your database credentials
+   $ php install.php [db_root_password]
 
-5. cd to ~/src and Run:
-
-   $ php install.php [root_user] [root_password]
-
-It will create the database, database user and assign all privileges to the user on the recently created database.
+It will download composer to the working directory, install the dependencies, create the database, database user and assign all privileges to the user on the recently created database.
 
 
