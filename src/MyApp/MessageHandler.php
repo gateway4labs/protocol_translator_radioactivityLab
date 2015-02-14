@@ -27,16 +27,18 @@ class MessageHandler {
 }
    public function parseMethod($message, $from){
 
+       $deleted = $this->db->deleteInvalidReservations();
+       var_dump($deleted);
        //decode the Json string to an array
        $messageArray = json_decode($message, true);
        $method = $messageArray['method'];
        $reservationId = $messageArray["authToken"];
-
        //$actuatorId = $messageArray['actuatorId'];
+       $credentials = $this->db->selectCredentials($reservationId);
 
        if ($method == "sendActuatorData")
        {
-           $credentials = $this->db->selectCredentials($reservationId);
+           //$credentials = $this->db->selectCredentials($reservationId);
 
            if ($credentials == -1){
 
@@ -49,7 +51,15 @@ class MessageHandler {
        }
        elseif ($method == "getSensorData")
        {
-           $this->theGeigerSensor->getSensorData($from, $messageArray);
+           //$this->theGeigerSensor->getSensorData($from, $messageArray);
+           if ($credentials == -1){
+
+               $this->theGeigerSensor->denyAuthorization($from, $messageArray);
+           }
+           else{
+               $this->theGeigerSensor->getSensorData($from, $messageArray);
+           }
+
        }
        elseif ($method == "getActuatorMetadata")
        {
