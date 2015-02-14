@@ -62,6 +62,18 @@ class dbConnection{
         else
             return -1;
     }
+
+    public function deleteInvalidReservations(){
+
+        $statement = $this->dbConn->prepare("DELETE FROM reservations WHERE reservation_start < DATE_SUB(NOW(), INTERVAL 7 DAY)");
+        $statement->execute();
+        $row = $statement->fetch(PDO::FETCH_ASSOC);
+
+        if ($row != FALSE)
+            return $row;
+        else
+            return -1;
+    }
     
  
 }
