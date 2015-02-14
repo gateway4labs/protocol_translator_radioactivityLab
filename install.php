@@ -37,6 +37,7 @@ $query = "CREATE DATABASE IF NOT EXISTS `$db` DEFAULT CHARACTER SET latin1 COLLA
               `labserverId` varchar(100) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
               `duration` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
               `reservation_key` varchar(100) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+              `reservation_start` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
                PRIMARY KEY (`id`) )
                ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
                CREATE USER '$user'@'localhost' IDENTIFIED BY '$pass';
